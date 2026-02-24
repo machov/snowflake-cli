@@ -569,12 +569,8 @@ class StageManager(SqlExecutionMixin):
                 # Snowflake `ls` returns unqualified names; re-attach the original FQN.
                 file_name = file["name"]
                 parts = file_name.split("/", maxsplit=1)
-                relative_path = parts[1] if len(parts) > 1 else ""
-                path = (
-                    stage_path.root_path() / relative_path
-                    if relative_path
-                    else stage_path.root_path()
-                )
+                relative_path = parts[1] if len(parts) > 1 else file_name
+                path = stage_path.root_path() / relative_path
             yield path
 
     def execute(
